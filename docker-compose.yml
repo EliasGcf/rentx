@@ -4,7 +4,6 @@ networks:
   rentx-network:
     driver: bridge
 
-
 services:
   rentx-api:
     build: .
@@ -18,7 +17,7 @@ services:
     volumes:
       - .:/usr/app
     networks:
-    - rentx-network
+      - rentx-network
 
   rentx-postgres:
     image: postgres
@@ -32,7 +31,7 @@ services:
     volumes:
       - pgdata:/data/postgres
     networks:
-    - rentx-network
+      - rentx-network
 
 volumes:
   pgdata:
