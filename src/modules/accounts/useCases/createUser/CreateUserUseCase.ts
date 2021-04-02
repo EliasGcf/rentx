@@ -1,8 +1,10 @@
 import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '../../../../errors/AppError';
-import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { AppError } from '@shared/errors';
+import { IBaseUseCase } from '@shared/useCases';
+import { IUsersRepository } from '@modules/accounts/repositories';
+import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
 interface IRequest {
   name: string;
@@ -12,13 +14,13 @@ interface IRequest {
 }
 
 @injectable()
-class CreateUserUseCase {
+class CreateUserUseCase implements IBaseUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute({ name, email, password, driver_license }: IRequest): Promise<void> {
+  async execute({ name, email, password, driver_license }: IRequest): Promise<User> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {
@@ -27,12 +29,14 @@ class CreateUserUseCase {
 
     const passwordHash = await hash(password, 8);
 
-    await this.usersRepository.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: passwordHash,
       driver_license,
     });
+
+    return user;
   }
 }
 

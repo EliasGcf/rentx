@@ -1,7 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 
-import { deleteFile } from '../../../../utils/file';
-import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { deleteFile } from '@utils/file';
+import { AppError } from '@shared/errors';
+import { IBaseUseCase } from '@shared/useCases';
+import { IUsersRepository } from '@modules/accounts/repositories';
+import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;
@@ -9,14 +12,18 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateUserAvatarUseCase {
+class UpdateUserAvatarUseCase implements IBaseUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute({ user_id, avatar_file }: IRequest): Promise<void> {
+  async execute({ user_id, avatar_file }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError('User does not exists.');
+    }
 
     if (user.avatar) {
       await deleteFile(`./tmp/avatar/${user.avatar}`);
@@ -25,6 +32,8 @@ class UpdateUserAvatarUseCase {
     user.avatar = avatar_file;
 
     await this.usersRepository.save(user);
+
+    return user;
   }
 }
 

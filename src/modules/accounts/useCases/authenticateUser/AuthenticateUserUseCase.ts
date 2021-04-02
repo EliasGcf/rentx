@@ -2,8 +2,9 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '../../../../errors/AppError';
-import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { IUsersRepository } from '@modules/accounts/repositories';
+import { AppError } from '@shared/errors';
+import { IBaseUseCase } from '@shared/useCases';
 
 interface IRequest {
   email: string;
@@ -19,7 +20,7 @@ interface IResponse {
 }
 
 @injectable()
-class AuthenticateUserUseCase {
+class AuthenticateUserUseCase implements IBaseUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,

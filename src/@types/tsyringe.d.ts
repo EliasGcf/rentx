@@ -1,5 +1,5 @@
-import { registeredDependencies } from 'shared/container';
 import 'tsyringe';
+import { registeredDependencies } from '@shared/container';
 
 const tokenValues = Object.values(registeredDependencies);
 

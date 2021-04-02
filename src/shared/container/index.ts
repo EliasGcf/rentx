@@ -1,29 +1,14 @@
-import { container } from 'tsyringe';
+import { register as registerProviders, registeredProviders } from './providers';
+import { register as registerRepositories, registeredRepositories } from './repositories';
 
-import { UsersRepository } from '../../modules/accounts/repositories/implementations/UsersRepository';
-import { IUsersRepository } from '../../modules/accounts/repositories/IUsersRepository';
-import { ICategoriesRepository } from '../../modules/cars/repositories/ICategoriesRepository';
-import { CategoriesRepository } from '../../modules/cars/repositories/implementations/CategoriesRepository';
-import { SpecificationsRepository } from '../../modules/cars/repositories/implementations/SpecificationsRepository';
-import { ISpecificationsRepository } from '../../modules/cars/repositories/ISpecificationsRepository';
+const registeredDependencies = {
+  ...registeredRepositories,
+  ...registeredProviders,
+};
 
-export const registeredDependencies = {
-  categoriesRepository: 'CategoriesRepository',
-  specificationsRepository: 'SpecificationsRepository',
-  usersRepository: 'UsersRepository',
-} as const;
+function register() {
+  registerRepositories();
+  registerProviders();
+}
 
-container.registerSingleton<ICategoriesRepository>(
-  registeredDependencies.categoriesRepository,
-  CategoriesRepository,
-);
-
-container.registerSingleton<ISpecificationsRepository>(
-  registeredDependencies.specificationsRepository,
-  SpecificationsRepository,
-);
-
-container.registerSingleton<IUsersRepository>(
-  registeredDependencies.usersRepository,
-  UsersRepository,
-);
+export { registeredDependencies, register };

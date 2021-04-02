@@ -1,8 +1,9 @@
-import csvParse from 'csv-parse';
 import fs from 'fs';
+import csvParse from 'csv-parse';
 import { inject, injectable } from 'tsyringe';
 
-import { CategoriesRepository } from '../../repositories/implementations/CategoriesRepository';
+import { IBaseUseCase } from '@shared/useCases';
+import { CategoriesRepository } from '@modules/cars/infra/typeorm/repositories';
 
 interface IImportCategory {
   name: string;
@@ -10,7 +11,7 @@ interface IImportCategory {
 }
 
 @injectable()
-class ImportCategoryUseCase {
+class ImportCategoryUseCase implements IBaseUseCase {
   constructor(
     @inject('CategoriesRepository')
     private categoriesRepository: CategoriesRepository,
