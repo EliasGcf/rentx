@@ -1,0 +1,14 @@
+import { getRepository, Repository } from 'typeorm';
+
+import { I{{ pascalCase pluralEntity }}Repository } from '@modules/{{ module }}/repositories';
+import { {{ entity }} } from '@modules/{{ module }}/infra/typeorm/entities/{{ entity }}';
+
+class {{ pascalCase pluralEntity }}Repository implements I{{ pascalCase pluralEntity }}Repository {
+  private ormRepository: Repository<{{ entity }}>;
+
+  constructor() {
+    this.ormRepository = getRepository({{ entity }});
+  }
+}
+
+export { {{ pascalCase pluralEntity }}Repository };

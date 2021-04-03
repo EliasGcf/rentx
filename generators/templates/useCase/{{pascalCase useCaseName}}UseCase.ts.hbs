@@ -1,0 +1,14 @@
+import { inject, injectable } from 'tsyringe';
+
+import { IBaseUseCase } from '@shared/useCases';
+
+interface IRequest {}
+
+@injectable()
+class {{ pascalCase useCaseName }}UseCase implements IBaseUseCase {
+  constructor() {}
+
+  async execute({}: IRequest): Promise<unknown> {}
+}
+
+export { {{ pascalCase useCaseName }}UseCase };

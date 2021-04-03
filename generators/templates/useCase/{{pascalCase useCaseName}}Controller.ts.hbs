@@ -1,0 +1,14 @@
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+
+import { {{ pascalCase useCaseName }}UseCase } from './{{ pascalCase useCaseName }}UseCase';
+
+class {{ pascalCase useCaseName }}Controller {
+  async handle(req: Request, res: Response): Promise<Response> {
+    const {{ camelCase useCaseName }}UseCase = container.resolve({{ pascalCase useCaseName }}UseCase);
+
+    const {{ camelCase useCaseName }}UseCaseResponse = await {{ camelCase useCaseName }}UseCase.execute();
+  }
+}
+
+export { {{ pascalCase useCaseName }}Controller };
