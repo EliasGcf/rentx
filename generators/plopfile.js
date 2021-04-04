@@ -1,12 +1,16 @@
 const { useCasePlopConfig } = require('./config/useCase');
-const { repositoryPlopConfig } = require('./config/repository');
+const {
+  implementationRepositoryPlopConfig,
+  inMemoryRepositoryPlopConfig,
+} = require('./config/repository');
 
 function setGenerators(
   /** @type {import('plop').NodePlopAPI} */
   plop,
 ) {
   plop.setGenerator('useCase', useCasePlopConfig);
-  plop.setGenerator('repository', repositoryPlopConfig);
+  plop.setGenerator('repository', implementationRepositoryPlopConfig);
+  plop.setGenerator('in-memory repository', inMemoryRepositoryPlopConfig);
 }
 
 module.exports = setGenerators;
