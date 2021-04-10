@@ -5,6 +5,9 @@ import { compilerOptions } from './tsconfig.json';
 
 export default {
   bail: 0,
+  collectCoverage: true,
+  collectCoverageFrom: ['<rootDir>/src/modules/**/useCases/**/*.ts'],
+  coverageReporters: ['text-summary', 'lcov'],
   clearMocks: true,
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: `<rootDir>/${compilerOptions.baseUrl}`,

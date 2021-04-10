@@ -1,6 +1,11 @@
 import { container } from 'tsyringe';
 
-import { IUsersRepository, UsersRepository } from '@modules/accounts/repositories';
+import {
+  IUsersRepository,
+  IUsersTokensRepository,
+  UsersRepository,
+  UsersTokensRepository,
+} from '@modules/accounts/repositories';
 import {
   ICategoriesRepository,
   CategoriesRepository,
@@ -20,9 +25,10 @@ const registeredRepositories = {
   carsRepository: 'CarsRepository',
   carsImagesRepository: 'CarsImagesRepository',
   rentsRepository: 'RentsRepository',
+  usersTokensRepository: 'UsersTokensRepository',
 } as const;
 
-function register() {
+function registerRepositories() {
   container.registerSingleton<ICategoriesRepository>(
     registeredRepositories.categoriesRepository,
     CategoriesRepository,
@@ -52,6 +58,11 @@ function register() {
     registeredRepositories.rentsRepository,
     RentsRepository,
   );
+
+  container.registerSingleton<IUsersTokensRepository>(
+    registeredRepositories.usersTokensRepository,
+    UsersTokensRepository,
+  );
 }
 
-export { registeredRepositories, register };
+export { registeredRepositories, registerRepositories };

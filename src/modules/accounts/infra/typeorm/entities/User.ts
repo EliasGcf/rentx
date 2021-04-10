@@ -6,7 +6,7 @@ import { USERS_TABLE_NAME } from '@shared/infra/typeorm/utils';
 @Entity(USERS_TABLE_NAME)
 class User {
   @PrimaryColumn()
-  id?: string;
+  id: string;
 
   @Column()
   name: string;

@@ -1,3 +1,4 @@
+import { IFindAllByUserIdOptionsDTO } from '@modules/rents/dtos';
 import { ICreateRentDTO } from '@modules/rents/dtos/ICreateRentDTO';
 import { Rent } from '@modules/rents/infra/typeorm/entities/Rent';
 
@@ -22,6 +23,25 @@ class InMemoryRentsRepository implements IRentsRepository {
 
   async findOpenRentByUserId(user_id: string): Promise<Rent | undefined> {
     return this.rents.find(rent => rent.user_id === user_id && !rent.end_date);
+  }
+
+  async findById(id: string): Promise<Rent | undefined> {
+    return this.rents.find(rent => rent.id === id);
+  }
+
+  async save(rent: Rent): Promise<void> {
+    const rentIndex = this.rents.findIndex(findRent => findRent.id === rent.id);
+
+    this.rents[rentIndex] = rent;
+  }
+
+  async findAllByUserId(
+    user_id: string,
+    _?: IFindAllByUserIdOptionsDTO,
+  ): Promise<Rent[]> {
+    const rents = this.rents.filter(rent => rent.user_id === user_id);
+
+    return rents;
   }
 }
 

@@ -55,7 +55,7 @@
     "import-helpers/order-imports": [
       "warn",
       {
-        "newlinesBetween": "always",
+        "newlinesBetween": "ignore",
         "groups": [
           "module",
           ["/^@config/", "/^@modules/", "/^@shared/", "/^@utils/", "/^@migrations/"],

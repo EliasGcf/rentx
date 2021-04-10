@@ -1,7 +1,7 @@
 import { getRepository, IsNull, Repository } from 'typeorm';
 
-import { ICreateRentDTO } from '@modules/rents/dtos/ICreateRentDTO';
 import { IRentsRepository } from '@modules/rents/repositories';
+import { ICreateRentDTO, IFindAllByUserIdOptionsDTO } from '@modules/rents/dtos';
 
 import { Rent } from '../entities/Rent';
 
@@ -40,6 +40,28 @@ class RentsRepository implements IRentsRepository {
     });
 
     return rent;
+  }
+
+  async findById(id: string): Promise<Rent | undefined> {
+    const rent = await this.ormRepository.findOne(id);
+
+    return rent;
+  }
+
+  async save(rent: Rent): Promise<void> {
+    await this.ormRepository.save(rent);
+  }
+
+  async findAllByUserId(
+    user_id: string,
+    options?: IFindAllByUserIdOptionsDTO,
+  ): Promise<Rent[]> {
+    const rents = await this.ormRepository.find({
+      where: { user_id },
+      relations: options?.relations,
+    });
+
+    return rents;
   }
 }
 

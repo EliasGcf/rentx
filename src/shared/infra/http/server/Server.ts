@@ -4,7 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerFile from 'swaggerFile';
 
 import { createDbConnection } from '@shared/infra/typeorm';
-import { register as registerContainer } from '@shared/container';
+import { registerDependencies } from '@shared/container';
 
 import { generalErrorHandler } from '../middlewares/generalErrorHandler';
 import { router } from '../routes/index.routes';
@@ -13,7 +13,7 @@ class Server {
   public app: Express;
 
   constructor() {
-    registerContainer();
+    registerDependencies();
     this.app = express();
 
     this.middlewares();

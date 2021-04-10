@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { cleanEnv, str } from 'envalid';
 
 const env = cleanEnv(process.env, {
@@ -5,6 +6,7 @@ const env = cleanEnv(process.env, {
     choices: ['development', 'test', 'production'],
     default: 'development',
   }),
+  FORGOT_MAIL_URL: str({ example: 'http://localhost:3333/password/reset?token=' }),
 });
 
 export { env };

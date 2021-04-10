@@ -8,7 +8,7 @@ interface IRequest {}
 class {{ pascalCase useCaseName }}UseCase implements IBaseUseCase {
   constructor() {}
 
-  async execute({}: IRequest): Promise<unknown> {}
+  async execute({}: IRequest): Promise<void> {}
 }
 
 export { {{ pascalCase useCaseName }}UseCase };

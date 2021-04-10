@@ -60,6 +60,18 @@ class CarsRepository implements ICarsRepository {
   async save(car: Car): Promise<void> {
     await this.ormRepository.save(car);
   }
+
+  async updateAvailable(id: string, isAvailable: boolean): Promise<void> {
+    // await this.ormRepository
+    //   .createQueryBuilder()
+    //   .update()
+    //   .set({ available: isAvailable })
+    //   .where('id = :id')
+    //   .setParameters({ id })
+    //   .execute();
+
+    await this.ormRepository.update(id, { available: isAvailable });
+  }
 }
 
 export { CarsRepository };

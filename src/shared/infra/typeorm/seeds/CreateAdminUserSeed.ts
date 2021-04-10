@@ -5,8 +5,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
-export const SEED_ADMIN_USER_EMAIL = 'admin@rentx.com.br';
-export const SEED_ADMIN_USER_PASS = 'admin';
+import { SEED_ADMIN_USER_EMAIL, SEED_ADMIN_USER_PASS } from '../utils';
 
 export default class CreateAdminUserSeed implements Seeder {
   public async run(_: Factory, connection: Connection): Promise<void> {

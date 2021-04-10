@@ -4,6 +4,7 @@ import { AppError } from '@shared/errors';
 import { IBaseUseCase } from '@shared/useCases';
 import { MIN_RENT_HOURS } from '@shared/constants';
 import { IDateProvider } from '@shared/container/providers';
+import { ICarsRepository } from '@modules/cars/repositories';
 import { IRentsRepository } from '@modules/rents/repositories';
 import { Rent } from '@modules/rents/infra/typeorm/entities/Rent';
 
@@ -21,9 +22,18 @@ class CreateRentUseCase implements IBaseUseCase {
 
     @inject('DateProvider')
     private dateProvider: IDateProvider,
+
+    @inject('CarsRepository')
+    private carsRepository: ICarsRepository,
   ) {}
 
   async execute({ user_id, car_id, expected_return_date }: IRequest): Promise<Rent> {
+    const findCar = await this.carsRepository.findById(car_id);
+
+    if (!findCar) {
+      throw new AppError('Car does not exists.');
+    }
+
     const openRentByUser = await this.rentsRepository.findOpenRentByUserId(user_id);
 
     if (openRentByUser) {
@@ -36,7 +46,9 @@ class CreateRentUseCase implements IBaseUseCase {
       throw new AppError('There is a rent in progress with this car.');
     }
 
-    const compare = this.dateProvider.compareInHours(new Date(), expected_return_date);
+    const dateNow = this.dateProvider.dateNow();
+
+    const compare = this.dateProvider.compareInHours(dateNow, expected_return_date);
 
     if (compare < MIN_RENT_HOURS) {
       throw new AppError(`Expected return date is less than ${MIN_RENT_HOURS}h.`);
@@ -47,6 +59,8 @@ class CreateRentUseCase implements IBaseUseCase {
       car_id,
       expected_return_date,
     });
+
+    await this.carsRepository.updateAvailable(car_id, false);
 
     return rent;
   }

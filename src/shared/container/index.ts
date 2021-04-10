@@ -1,14 +1,14 @@
-import { register as registerProviders, registeredProviders } from './providers';
-import { register as registerRepositories, registeredRepositories } from './repositories';
+import { registerProviders, registeredProviders } from './providers';
+import { registerRepositories, registeredRepositories } from './repositories';
 
 const registeredDependencies = {
   ...registeredRepositories,
   ...registeredProviders,
 };
 
-function register() {
+function registerDependencies() {
   registerRepositories();
   registerProviders();
 }
 
-export { registeredDependencies, register };
+export { registeredDependencies, registerDependencies };
