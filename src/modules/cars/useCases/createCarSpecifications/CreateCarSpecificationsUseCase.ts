@@ -24,7 +24,7 @@ class CreateCarSpecificationsUseCase implements IBaseUseCase {
     const car = await this.carsRepository.findById(car_id);
 
     if (!car) {
-      throw new AppError('Car does not exists');
+      throw new AppError('car_already_registered');
     }
 
     const specifications = await this.specificationsRepository.findByIds(

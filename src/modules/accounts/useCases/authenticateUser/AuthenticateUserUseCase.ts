@@ -39,13 +39,13 @@ class AuthenticateUserUseCase implements IBaseUseCase {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError('Email or password incorrect');
+      throw new AppError('incorrect_credentials');
     }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError('Email or password incorrect');
+      throw new AppError('incorrect_credentials');
     }
 
     const token = sign({}, authConfig.secret_token, {

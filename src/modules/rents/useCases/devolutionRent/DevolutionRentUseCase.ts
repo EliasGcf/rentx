@@ -31,13 +31,13 @@ class DevolutionRentUseCase implements IBaseUseCase {
     const rent = await this.rentsRepository.findById(rent_id);
 
     if (!rent) {
-      throw new AppError('Rent does not exists');
+      throw new AppError('rent_is_not_registered');
     }
 
     const car = await this.carsRepository.findById(rent.car_id);
 
     if (!car) {
-      throw new AppError('Car does not exists');
+      throw new AppError('car_is_not_registered');
     }
 
     const dateNow = this.dateProvider.dateNow();

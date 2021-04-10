@@ -28,7 +28,7 @@ class CreateCarUseCase implements IBaseUseCase {
     );
 
     if (carAlreadyExists) {
-      throw new AppError('Car already exists.');
+      throw new AppError('car_already_registered');
     }
 
     const car = await this.carsRepository.create({

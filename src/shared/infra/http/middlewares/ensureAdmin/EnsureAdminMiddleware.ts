@@ -17,7 +17,7 @@ class EnsureAdminMiddleware {
     const user = await this.usersRepository.findById(id);
 
     if (!user?.isAdmin) {
-      throw new AppError("User isn't admin.");
+      throw new AppError('user_is_not_admin');
     }
 
     return next();

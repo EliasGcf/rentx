@@ -10,7 +10,7 @@ class ResetUserPasswordController {
     const { password } = req.body;
 
     if (Array.isArray(token) || typeof token !== 'string') {
-      throw new AppError('Token must be a string.');
+      throw new AppError('password_reset_token_not_format_valid');
     }
 
     const resetUserPasswordUseCase = container.resolve(ResetUserPasswordUseCase);

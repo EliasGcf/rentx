@@ -21,7 +21,7 @@ class CreateCategoryUseCase implements IBaseUseCase {
     const categoryAlreadyExists = await this.categoriesRepository.findByName(name);
 
     if (categoryAlreadyExists) {
-      throw new AppError('Category already exists');
+      throw new AppError('category_already_registered');
     }
 
     const category = await this.categoriesRepository.create({ name, description });

@@ -31,19 +31,19 @@ class CreateRentUseCase implements IBaseUseCase {
     const findCar = await this.carsRepository.findById(car_id);
 
     if (!findCar) {
-      throw new AppError('Car does not exists.');
+      throw new AppError('car_is_not_registered');
     }
 
     const openRentByUser = await this.rentsRepository.findOpenRentByUserId(user_id);
 
     if (openRentByUser) {
-      throw new AppError('There is a rent in progress with this user.');
+      throw new AppError('user_rent_in_progress');
     }
 
     const openRentByCar = await this.rentsRepository.findOpenRentByCarId(car_id);
 
     if (openRentByCar) {
-      throw new AppError('There is a rent in progress with this car.');
+      throw new AppError('car_rent_in_progress');
     }
 
     const dateNow = this.dateProvider.dateNow();
@@ -51,7 +51,7 @@ class CreateRentUseCase implements IBaseUseCase {
     const compare = this.dateProvider.compareInHours(dateNow, expected_return_date);
 
     if (compare < MIN_RENT_HOURS) {
-      throw new AppError(`Expected return date is less than ${MIN_RENT_HOURS}h.`);
+      throw new AppError('invalid_return_rent_date');
     }
 
     const rent = await this.rentsRepository.create({

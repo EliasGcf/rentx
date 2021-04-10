@@ -33,7 +33,7 @@ class SendForgotPasswordMailUseCase implements IBaseUseCase {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError('User does not exists.');
+      throw new AppError('user_is_not_registered');
     }
 
     const refresh_token = uuidV4();

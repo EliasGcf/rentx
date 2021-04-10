@@ -23,7 +23,7 @@ class CreateSpecificationUseCase implements IBaseUseCase {
     );
 
     if (specificationAlreadyExists) {
-      throw new AppError('Specification already exists');
+      throw new AppError('specification_already_registered');
     }
 
     const specification = await this.specificationsRepository.create({

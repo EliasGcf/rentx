@@ -21,7 +21,7 @@ class EnsureAuthenticatedMiddleware {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      throw new AppError('Token missing', 401);
+      throw new AppError('missing_auth_token', 'UNAUTHORIZED');
     }
 
     const [, token] = authHeader.split(' ');
@@ -38,7 +38,7 @@ class EnsureAuthenticatedMiddleware {
       });
 
       if (!user) {
-        throw new AppError('User does not exists', 401);
+        throw new AppError('user_is_not_registered', 'UNAUTHORIZED');
       }
 
       req.user = {
@@ -47,7 +47,7 @@ class EnsureAuthenticatedMiddleware {
 
       return next();
     } catch {
-      throw new AppError('Invalid Token', 401);
+      throw new AppError('invalid_token', 'UNAUTHORIZED');
     }
   }
 }

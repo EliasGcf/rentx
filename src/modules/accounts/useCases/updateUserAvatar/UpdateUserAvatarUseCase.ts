@@ -22,7 +22,7 @@ class UpdateUserAvatarUseCase implements IBaseUseCase {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('User does not exists.');
+      throw new AppError('user_is_not_registered');
     }
 
     if (user.avatar) {

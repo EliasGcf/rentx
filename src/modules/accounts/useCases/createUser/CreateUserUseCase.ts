@@ -24,7 +24,7 @@ class CreateUserUseCase implements IBaseUseCase {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {
-      throw new AppError('User already exists');
+      throw new AppError('email_already_registered');
     }
 
     const passwordHash = await hash(password, 8);

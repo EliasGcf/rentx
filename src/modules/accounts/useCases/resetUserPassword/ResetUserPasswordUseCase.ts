@@ -28,7 +28,7 @@ class ResetUserPasswordUseCase implements IBaseUseCase {
     const userToken = await this.usersTokensRepository.findByRefreshToken(token);
 
     if (!userToken) {
-      throw new AppError('Token Invalid.');
+      throw new AppError('invalid_token');
     }
 
     const TOKEN_EXPIRES_DATE_IS_BEFORE_DATE_NOW = this.dateProvider.isBefore(
@@ -37,13 +37,13 @@ class ResetUserPasswordUseCase implements IBaseUseCase {
     );
 
     if (TOKEN_EXPIRES_DATE_IS_BEFORE_DATE_NOW) {
-      throw new AppError('Token Expired.');
+      throw new AppError('expired_token');
     }
 
     const user = await this.usersRepository.findById(userToken.user_id);
 
     if (!user) {
-      throw new AppError('User does not exist.');
+      throw new AppError('user_is_not_registered');
     }
 
     user.password = await hash(password, 8);
