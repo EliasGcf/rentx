@@ -48,18 +48,18 @@ class AuthenticateUserUseCase implements IBaseUseCase {
       throw new AppError('incorrect_credentials');
     }
 
-    const token = sign({}, authConfig.secret_token, {
+    const token = sign({}, authConfig.jwt.secret, {
       subject: user.id,
-      expiresIn: authConfig.expires_in_token,
+      expiresIn: authConfig.jwt.expires_in,
     });
 
-    const refresh_token = sign({ email: user.email }, authConfig.secret_refresh_token, {
+    const refresh_token = sign({ email: user.email }, authConfig.refreshJwt.secret, {
       subject: user.id,
-      expiresIn: authConfig.expires_in_refresh_token,
+      expiresIn: authConfig.refreshJwt.expires_in,
     });
 
     const refresh_token_expires_date = this.dateProvider.addDays(
-      authConfig.expires_in_refresh_token_days,
+      authConfig.refreshJwt.expires_in_days,
     );
 
     await this.usersTokensRepository.create({

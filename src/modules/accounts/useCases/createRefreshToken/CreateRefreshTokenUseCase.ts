@@ -29,7 +29,7 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
   async execute({ refresh_token }: IRequest): Promise<string> {
     const { email, sub: user_id } = verify(
       refresh_token,
-      authConfig.secret_refresh_token,
+      authConfig.refreshJwt.secret,
     ) as IPayload;
 
     const userToken = await this.usersTokensRepository.findByUserIdAndRefreshToken({
@@ -43,13 +43,13 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
 
     await this.usersTokensRepository.deleteById(userToken.id);
 
-    const new_refresh_token = sign({ email }, authConfig.secret_refresh_token, {
+    const new_refresh_token = sign({ email }, authConfig.refreshJwt.secret, {
       subject: user_id,
-      expiresIn: authConfig.expires_in_refresh_token,
+      expiresIn: authConfig.refreshJwt.expires_in,
     });
 
     const refresh_token_expires_date = this.dateProvider.addDays(
-      authConfig.expires_in_refresh_token_days,
+      authConfig.refreshJwt.expires_in_days,
     );
 
     await this.usersTokensRepository.create({

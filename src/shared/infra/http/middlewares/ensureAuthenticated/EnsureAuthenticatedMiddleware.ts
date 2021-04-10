@@ -29,7 +29,7 @@ class EnsureAuthenticatedMiddleware {
     try {
       const { sub: user_id } = verify(
         token,
-        authConfig.secret_refresh_token,
+        authConfig.refreshJwt.secret,
       ) as ITokenPayload;
 
       const user = await this.usersTokensRepository.findByUserIdAndRefreshToken({
