@@ -1,10 +1,9 @@
 import { inject, injectable } from 'tsyringe';
-import { hash } from 'bcryptjs';
 
 import { IBaseUseCase } from '@shared/useCases';
 import { IUsersRepository, IUsersTokensRepository } from '@modules/accounts/repositories';
 import { AppError } from '@shared/errors';
-import { IDateProvider } from '@shared/container/providers';
+import { IDateProvider, IHashProvider } from '@shared/container/providers';
 
 interface IRequest {
   token: string;
@@ -22,6 +21,9 @@ class ResetUserPasswordUseCase implements IBaseUseCase {
 
     @inject('DateProvider')
     private dateProvider: IDateProvider,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   async execute({ token, password }: IRequest): Promise<void> {
@@ -46,7 +48,7 @@ class ResetUserPasswordUseCase implements IBaseUseCase {
       throw new AppError('user_is_not_registered');
     }
 
-    user.password = await hash(password, 8);
+    user.password = await this.hashProvider.generateHash(password);
 
     await this.usersRepository.save(user);
     await this.usersTokensRepository.deleteById(userToken.id);

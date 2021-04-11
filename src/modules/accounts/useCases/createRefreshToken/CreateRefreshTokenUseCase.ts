@@ -1,10 +1,9 @@
 import { inject, injectable } from 'tsyringe';
-import { sign, verify } from 'jsonwebtoken';
 
 import { AppError } from '@shared/errors';
 import { authConfig } from '@config/auth';
 import { IBaseUseCase } from '@shared/useCases';
-import { IDateProvider } from '@shared/container/providers';
+import { IDateProvider, IJWTProvider } from '@shared/container/providers';
 import { IUsersTokensRepository } from '@modules/accounts/repositories';
 
 interface IRequest {
@@ -24,13 +23,16 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
 
     @inject('DateProvider')
     private dateProvider: IDateProvider,
+
+    @inject('JWTProvider')
+    private jwtProvider: IJWTProvider,
   ) {}
 
   async execute({ refresh_token }: IRequest): Promise<string> {
-    const { email, sub: user_id } = verify(
+    const { email, sub: user_id } = this.jwtProvider.decodeToken<IPayload>(
       refresh_token,
       authConfig.refreshJwt.secret,
-    ) as IPayload;
+    );
 
     const userToken = await this.usersTokensRepository.findByUserIdAndRefreshToken({
       user_id,
@@ -43,10 +45,14 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
 
     await this.usersTokensRepository.deleteById(userToken.id);
 
-    const new_refresh_token = sign({ email }, authConfig.refreshJwt.secret, {
-      subject: user_id,
-      expiresIn: authConfig.refreshJwt.expires_in,
-    });
+    const new_refresh_token = this.jwtProvider.generateToken(
+      authConfig.refreshJwt.secret,
+      {
+        payload: { email },
+        subject: user_id,
+        expiresIn: authConfig.refreshJwt.expires_in,
+      },
+    );
 
     const refresh_token_expires_date = this.dateProvider.addDays(
       authConfig.refreshJwt.expires_in_days,

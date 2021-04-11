@@ -1,11 +1,9 @@
-import { compare } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
 import { authConfig } from '@config/auth';
 import { AppError } from '@shared/errors';
 import { IBaseUseCase } from '@shared/useCases';
-import { IDateProvider } from '@shared/container/providers';
+import { IDateProvider, IHashProvider, IJWTProvider } from '@shared/container/providers';
 import { IUsersRepository, IUsersTokensRepository } from '@modules/accounts/repositories';
 
 interface IRequest {
@@ -33,6 +31,12 @@ class AuthenticateUserUseCase implements IBaseUseCase {
 
     @inject('DateProvider')
     private dateProvider: IDateProvider,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+
+    @inject('JWTProvider')
+    private jwtProvider: IJWTProvider,
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -42,18 +46,19 @@ class AuthenticateUserUseCase implements IBaseUseCase {
       throw new AppError('incorrect_credentials');
     }
 
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatch = await this.hashProvider.compareHash(password, user.password);
 
     if (!passwordMatch) {
       throw new AppError('incorrect_credentials');
     }
 
-    const token = sign({}, authConfig.jwt.secret, {
+    const token = this.jwtProvider.generateToken(authConfig.jwt.secret, {
       subject: user.id,
       expiresIn: authConfig.jwt.expires_in,
     });
 
-    const refresh_token = sign({ email: user.email }, authConfig.refreshJwt.secret, {
+    const refresh_token = this.jwtProvider.generateToken(authConfig.refreshJwt.secret, {
+      payload: { email: user.email },
       subject: user.id,
       expiresIn: authConfig.refreshJwt.expires_in,
     });

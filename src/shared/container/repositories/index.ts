@@ -1,22 +1,8 @@
 import { container } from 'tsyringe';
 
-import {
-  IUsersRepository,
-  IUsersTokensRepository,
-  UsersRepository,
-  UsersTokensRepository,
-} from '@modules/accounts/repositories';
-import {
-  ICategoriesRepository,
-  CategoriesRepository,
-  ISpecificationsRepository,
-  SpecificationsRepository,
-  ICarsRepository,
-  CarsRepository,
-  ICarsImagesRepository,
-  CarsImagesRepository,
-} from '@modules/cars/repositories';
-import { IRentsRepository, RentsRepository } from '@modules/rents/repositories';
+import * as carsRepositories from '@modules/cars/repositories';
+import * as rentsRepositories from '@modules/rents/repositories';
+import * as accountsRepositories from '@modules/accounts/repositories';
 
 const registeredRepositories = {
   categoriesRepository: 'CategoriesRepository',
@@ -29,39 +15,39 @@ const registeredRepositories = {
 } as const;
 
 function registerRepositories() {
-  container.registerSingleton<ICategoriesRepository>(
+  container.registerSingleton<carsRepositories.ICategoriesRepository>(
     registeredRepositories.categoriesRepository,
-    CategoriesRepository,
+    carsRepositories.CategoriesRepository,
   );
 
-  container.registerSingleton<ISpecificationsRepository>(
+  container.registerSingleton<carsRepositories.ISpecificationsRepository>(
     registeredRepositories.specificationsRepository,
-    SpecificationsRepository,
+    carsRepositories.SpecificationsRepository,
   );
 
-  container.registerSingleton<IUsersRepository>(
+  container.registerSingleton<accountsRepositories.IUsersRepository>(
     registeredRepositories.usersRepository,
-    UsersRepository,
+    accountsRepositories.UsersRepository,
   );
 
-  container.registerSingleton<ICarsRepository>(
+  container.registerSingleton<carsRepositories.ICarsRepository>(
     registeredRepositories.carsRepository,
-    CarsRepository,
+    carsRepositories.CarsRepository,
   );
 
-  container.registerSingleton<ICarsImagesRepository>(
+  container.registerSingleton<carsRepositories.ICarsImagesRepository>(
     registeredRepositories.carsImagesRepository,
-    CarsImagesRepository,
+    carsRepositories.CarsImagesRepository,
   );
 
-  container.registerSingleton<IRentsRepository>(
+  container.registerSingleton<rentsRepositories.IRentsRepository>(
     registeredRepositories.rentsRepository,
-    RentsRepository,
+    rentsRepositories.RentsRepository,
   );
 
-  container.registerSingleton<IUsersTokensRepository>(
+  container.registerSingleton<accountsRepositories.IUsersTokensRepository>(
     registeredRepositories.usersTokensRepository,
-    UsersTokensRepository,
+    accountsRepositories.UsersTokensRepository,
   );
 }
 

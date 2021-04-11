@@ -1,8 +1,8 @@
-import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@shared/errors';
 import { IBaseUseCase } from '@shared/useCases';
+import { IHashProvider } from '@shared/container/providers';
 import { IUsersRepository } from '@modules/accounts/repositories';
 import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
@@ -18,6 +18,9 @@ class CreateUserUseCase implements IBaseUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   async execute({ name, email, password, driver_license }: IRequest): Promise<User> {
@@ -27,7 +30,7 @@ class CreateUserUseCase implements IBaseUseCase {
       throw new AppError('email_already_registered');
     }
 
-    const passwordHash = await hash(password, 8);
+    const passwordHash = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,

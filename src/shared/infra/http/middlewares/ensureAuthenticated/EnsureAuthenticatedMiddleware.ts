@@ -1,20 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
-import { verify } from 'jsonwebtoken';
 
 import { AppError } from '@shared/errors';
 import { authConfig } from '@config/auth';
+import { IJWTProvider } from '@shared/container/providers';
 import { IUsersTokensRepository } from '@modules/accounts/repositories';
-
-interface ITokenPayload {
-  sub: string;
-}
 
 @injectable()
 class EnsureAuthenticatedMiddleware {
   constructor(
     @inject('UsersTokensRepository')
     private usersTokensRepository: IUsersTokensRepository,
+
+    @inject('JWTProvider')
+    private jwtProvider: IJWTProvider,
   ) {}
 
   async handle(req: Request, res: Response, next: NextFunction) {
@@ -27,10 +26,10 @@ class EnsureAuthenticatedMiddleware {
     const [, token] = authHeader.split(' ');
 
     try {
-      const { sub: user_id } = verify(
+      const { sub: user_id } = this.jwtProvider.decodeToken(
         token,
         authConfig.refreshJwt.secret,
-      ) as ITokenPayload;
+      );
 
       const user = await this.usersTokensRepository.findByUserIdAndRefreshToken({
         user_id,
