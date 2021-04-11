@@ -12,7 +12,7 @@ import { SEED_ADMIN_USER_EMAIL, SEED_ADMIN_USER_PASS } from '../utils';
 registerDependencies();
 
 @autoInjectable()
-export default class CreateAdminUserSeed implements Seeder {
+class CreateAdminUserSeed implements Seeder {
   constructor(
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -36,3 +36,5 @@ export default class CreateAdminUserSeed implements Seeder {
     await usersOrmRepository.save(adminUser);
   }
 }
+
+export default (CreateAdminUserSeed as unknown) as new () => Seeder;
