@@ -5,7 +5,7 @@ import {
   IFindByUserIdAndRefreshTokenDTO,
 } from '@modules/accounts/dtos';
 import { IUsersTokensRepository } from '@modules/accounts/repositories';
-import { UserToken } from '@modules/accounts/infra/typeorm/entities/UserToken';
+import { UserToken } from '@modules/accounts/entities';
 
 class UsersTokensRepository implements IUsersTokensRepository {
   private ormRepository: Repository<UserToken>;

@@ -1,4 +1,4 @@
-import { RentRelations } from '../infra/typeorm/entities/Rent';
+import { RentRelations } from '../entities';
 
 interface IFindAllByUserIdOptionsDTO {
   relations?: RentRelations;

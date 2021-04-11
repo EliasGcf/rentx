@@ -1,9 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
-import { ICreateCarImageDTO } from '@modules/cars/dtos/ICreateCarImageDTO';
+import { CarImage } from '@modules/cars/entities';
+import { ICreateCarImageDTO } from '@modules/cars/dtos';
 import { ICarsImagesRepository } from '@modules/cars/repositories';
-
-import { CarImage } from '../entities/CarImage';
 
 class CarsImagesRepository implements ICarsImagesRepository {
   private ormRepository: Repository<CarImage>;

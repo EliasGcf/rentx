@@ -2,8 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 
 import { ICreateCarDTO, IFindAllAvailableDTO } from '@modules/cars/dtos';
 import { ICarsRepository } from '@modules/cars/repositories';
-
-import { Car } from '../entities/Car';
+import { Car } from '@modules/cars/entities';
 
 class CarsRepository implements ICarsRepository {
   private ormRepository: Repository<Car>;

@@ -1,6 +1,5 @@
-import { IFindAllByUserIdOptionsDTO } from '@modules/rents/dtos';
-import { ICreateRentDTO } from '@modules/rents/dtos/ICreateRentDTO';
-import { Rent } from '@modules/rents/infra/typeorm/entities/Rent';
+import { ICreateRentDTO, IFindAllByUserIdOptionsDTO } from '@modules/rents/dtos';
+import { Rent } from '@modules/rents/entities';
 
 import { IRentsRepository } from '../IRentsRepository';
 

@@ -2,7 +2,7 @@ import {
   ICreateUserTokenDTO,
   IFindByUserIdAndRefreshTokenDTO,
 } from '@modules/accounts/dtos';
-import { UserToken } from '@modules/accounts/infra/typeorm/entities/UserToken';
+import { UserToken } from '@modules/accounts/entities';
 
 import { IUsersTokensRepository } from '../IUsersTokensRepository';
 

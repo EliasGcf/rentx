@@ -1,8 +1,9 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/useCases';
+
+import { Rent } from '@modules/rents/entities';
 import { IRentsRepository } from '@modules/rents/repositories';
-import { Rent } from '@modules/rents/infra/typeorm/entities/Rent';
 
 interface IRequest {
   user_id: string;

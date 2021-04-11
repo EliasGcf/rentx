@@ -1,5 +1,5 @@
-import { ICreateCarImageDTO } from '../dtos/ICreateCarImageDTO';
-import { CarImage } from '../infra/typeorm/entities/CarImage';
+import { ICreateCarImageDTO } from '../dtos';
+import { CarImage } from '../entities';
 
 interface ICarsImagesRepository {
   create(data: ICreateCarImageDTO): Promise<CarImage>;

@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 
+import { Car } from '@modules/cars/entities';
 import { RENTS_TABLE_NAME } from '@shared/infra/typeorm/utils';
-import { Car } from '@modules/cars/infra/typeorm/entities/Car';
 
 type RentRelations = Array<'car'>;
 

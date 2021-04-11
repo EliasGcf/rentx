@@ -1,5 +1,5 @@
 import { ICreateCarDTO, IFindAllAvailableDTO } from '@modules/cars/dtos';
-import { Car } from '@modules/cars/infra/typeorm/entities/Car';
+import { Car } from '@modules/cars/entities';
 
 import { ICarsRepository } from '../ICarsRepository';
 

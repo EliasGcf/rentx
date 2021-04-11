@@ -1,11 +1,11 @@
 import { autoInjectable, inject } from 'tsyringe';
+import { Factory, Seeder } from 'typeorm-seeding';
 import { v4 as uuidV4 } from 'uuid';
 import { Connection } from 'typeorm';
-import { Factory, Seeder } from 'typeorm-seeding';
 
+import { User } from '@modules/accounts/entities';
 import { registerDependencies } from '@shared/container';
 import { IHashProvider } from '@shared/container/providers';
-import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
 import { SEED_ADMIN_USER_EMAIL, SEED_ADMIN_USER_PASS } from '../utils';
 

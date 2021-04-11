@@ -1,5 +1,5 @@
 import { ICreateRentDTO, IFindAllByUserIdOptionsDTO } from '../dtos';
-import { Rent } from '../infra/typeorm/entities/Rent';
+import { Rent } from '../entities';
 
 interface IRentsRepository {
   create(data: ICreateRentDTO): Promise<Rent>;

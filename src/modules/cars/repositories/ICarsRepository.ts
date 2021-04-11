@@ -1,5 +1,5 @@
 import { ICreateCarDTO, IFindAllAvailableDTO } from '../dtos';
-import { Car } from '../infra/typeorm/entities/Car';
+import { Car } from '../entities';
 
 interface ICarsRepository {
   create(data: ICreateCarDTO): Promise<Car>;

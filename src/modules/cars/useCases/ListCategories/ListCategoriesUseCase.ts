@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/useCases';
+import { Category } from '@modules/cars/entities';
 import { ICategoriesRepository } from '@modules/cars/repositories';
-import { Category } from '@modules/cars/infra/typeorm/entities/Category';
 
 @injectable()
 class ListCategoriesUseCase implements IBaseUseCase {

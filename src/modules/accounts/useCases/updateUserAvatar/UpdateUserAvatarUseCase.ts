@@ -3,8 +3,8 @@ import { inject, injectable } from 'tsyringe';
 import { deleteFile } from '@utils/file';
 import { AppError } from '@shared/errors';
 import { IBaseUseCase } from '@shared/useCases';
+import { User } from '@modules/accounts/entities';
 import { IUsersRepository } from '@modules/accounts/repositories';
-import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;

@@ -3,8 +3,9 @@ import { inject, injectable } from 'tsyringe';
 import { AppError } from '@shared/errors';
 import { IBaseUseCase } from '@shared/useCases';
 import { IHashProvider } from '@shared/container/providers';
+
+import { User } from '@modules/accounts/entities';
 import { IUsersRepository } from '@modules/accounts/repositories';
-import { User } from '@modules/accounts/infra/typeorm/entities/User';
 
 interface IRequest {
   name: string;

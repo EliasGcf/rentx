@@ -4,9 +4,11 @@ import { AppError } from '@shared/errors';
 import { IBaseUseCase } from '@shared/useCases';
 import { MIN_RENT_HOURS } from '@shared/constants';
 import { IDateProvider } from '@shared/container/providers';
-import { ICarsRepository } from '@modules/cars/repositories';
+
+import { Rent } from '@modules/rents/entities';
 import { IRentsRepository } from '@modules/rents/repositories';
-import { Rent } from '@modules/rents/infra/typeorm/entities/Rent';
+
+import { ICarsRepository } from '@modules/cars/repositories';
 
 interface IRequest {
   user_id: string;

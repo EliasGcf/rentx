@@ -1,4 +1,4 @@
-import { Category } from '@modules/cars/infra/typeorm/entities/Category';
+import { Category } from '@modules/cars/entities';
 
 import { ICategoriesRepository, ICreateCategoryDTO } from '../ICategoriesRepository';
 
