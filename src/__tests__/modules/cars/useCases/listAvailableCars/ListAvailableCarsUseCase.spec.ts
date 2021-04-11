@@ -1,5 +1,6 @@
-import { ICarsRepository } from '@modules/cars/repositories';
 import { InMemoryCarsRepository } from '@modules/cars/repositories/in-memory';
+
+import { ICarsRepository } from '@modules/cars/repositories';
 import { ListAvailableCarsUseCase } from '@modules/cars/useCases/listAvailableCars';
 
 let inMemoryCarsRepository: ICarsRepository;

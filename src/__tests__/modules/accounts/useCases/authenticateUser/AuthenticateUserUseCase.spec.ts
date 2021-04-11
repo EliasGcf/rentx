@@ -1,22 +1,23 @@
 import { AppError } from '@shared/errors';
 
+import { InMemoryJWTProvider } from '@shared/container/providers/JWTProvider/in-memory';
+import { InMemoryHashProvider } from '@shared/container/providers/HashProvider/in-memory';
 import {
   InMemoryUsersRepository,
   InMemoryUsersTokensRepository,
 } from '@modules/accounts/repositories/in-memory';
-import { IUsersRepository, IUsersTokensRepository } from '@modules/accounts/repositories';
 
-import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
-import { CreateUserUseCase } from '@modules/accounts/useCases/createUser';
 import {
   DayjsDateProvider,
   IDateProvider,
   IHashProvider,
   IJWTProvider,
 } from '@shared/container/providers';
+
+import { ICreateUserDTO } from '@modules/accounts/dtos';
+import { CreateUserUseCase } from '@modules/accounts/useCases/createUser';
 import { AuthenticateUserUseCase } from '@modules/accounts/useCases/authenticateUser';
-import { InMemoryHashProvider } from '@shared/container/providers/HashProvider/in-memory';
-import { InMemoryJWTProvider } from '@shared/container/providers/JWTProvider/in-memory';
+import { IUsersRepository, IUsersTokensRepository } from '@modules/accounts/repositories';
 
 let inMemoryUsersRepository: IUsersRepository;
 let inMemoryUsersTokensRepository: IUsersTokensRepository;

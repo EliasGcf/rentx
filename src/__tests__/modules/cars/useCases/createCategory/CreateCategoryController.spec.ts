@@ -3,6 +3,7 @@ import { Connection } from 'typeorm';
 import { runSeeder } from 'typeorm-seeding';
 
 import { server } from '@shared/infra/http/server/Server';
+
 import { createDbConnection } from '@shared/infra/typeorm';
 import CreateAdminUserSeed from '@shared/infra/typeorm/seeds/CreateAdminUserSeed';
 import { SEED_ADMIN_USER_EMAIL, SEED_ADMIN_USER_PASS } from '@shared/infra/typeorm/utils';

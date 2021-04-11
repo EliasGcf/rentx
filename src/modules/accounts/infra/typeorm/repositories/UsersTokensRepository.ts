@@ -1,11 +1,11 @@
 import { getRepository, Repository } from 'typeorm';
 
+import { UserToken } from '@modules/accounts/entities';
+import { IUsersTokensRepository } from '@modules/accounts/repositories';
 import {
   ICreateUserTokenDTO,
   IFindByUserIdAndRefreshTokenDTO,
 } from '@modules/accounts/dtos';
-import { IUsersTokensRepository } from '@modules/accounts/repositories';
-import { UserToken } from '@modules/accounts/entities';
 
 class UsersTokensRepository implements IUsersTokensRepository {
   private ormRepository: Repository<UserToken>;

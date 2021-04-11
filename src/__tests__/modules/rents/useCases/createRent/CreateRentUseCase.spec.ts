@@ -1,13 +1,15 @@
 import dayjs from 'dayjs';
 
-import { ICarsRepository } from '@modules/cars/repositories';
-import { IRentsRepository } from '@modules/rents/repositories';
 import { InMemoryCarsRepository } from '@modules/cars/repositories/in-memory';
 import { InMemoryRentsRepository } from '@modules/rents/repositories/in-memory';
-import { CreateRentUseCase } from '@modules/rents/useCases/createRent';
+
 import { AppError } from '@shared/errors';
 import { MIN_RENT_HOURS } from '@shared/constants';
 import { DayjsDateProvider, IDateProvider } from '@shared/container/providers';
+
+import { ICarsRepository } from '@modules/cars/repositories';
+import { IRentsRepository } from '@modules/rents/repositories';
+import { CreateRentUseCase } from '@modules/rents/useCases/createRent';
 
 let createRentUseCase: CreateRentUseCase;
 let inMemoryRentsRepository: IRentsRepository;

@@ -1,18 +1,19 @@
+import { AppError } from '@shared/errors';
+
+import { IUsersRepository, IUsersTokensRepository } from '@modules/accounts/repositories';
+import { InMemoryMailProvider } from '@shared/container/providers/MailProvider/in-memory';
 import {
   InMemoryUsersRepository,
   InMemoryUsersTokensRepository,
 } from '@modules/accounts/repositories/in-memory';
-import { IUsersRepository, IUsersTokensRepository } from '@modules/accounts/repositories';
 
 import {
   IDateProvider,
   DayjsDateProvider,
   IMailProvider,
 } from '@shared/container/providers';
-import { InMemoryMailProvider } from '@shared/container/providers/MailProvider/in-memory';
 
 import { SendForgotPasswordMailUseCase } from '@modules/accounts/useCases/sendForgotPasswordMail';
-import { AppError } from '@shared/errors';
 
 let inMemoryUsersRepository: IUsersRepository;
 let inMemoryUsersTokensRepository: IUsersTokensRepository;
