@@ -10,13 +10,18 @@ interface IRequest {
   refresh_token: string;
 }
 
+interface IResponse {
+  refresh_token: string;
+  token: string;
+}
+
 interface IPayload {
   sub: string;
   email: string;
 }
 
 @injectable()
-class CreateRefreshTokenUseCase implements IBaseUseCase {
+class CreateTokenByRefreshTokenUseCase implements IBaseUseCase {
   constructor(
     @inject('UsersTokensRepository')
     private usersTokensRepository: IUsersTokensRepository,
@@ -28,7 +33,7 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
     private jwtProvider: IJWTProvider,
   ) {}
 
-  async execute({ refresh_token }: IRequest): Promise<string> {
+  async execute({ refresh_token }: IRequest): Promise<IResponse> {
     const { email, sub: user_id } = this.jwtProvider.decodeToken<IPayload>(
       refresh_token,
       authConfig.refreshJwt.secret,
@@ -44,6 +49,11 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
     }
 
     await this.usersTokensRepository.deleteById(userToken.id);
+
+    const token = this.jwtProvider.generateToken(authConfig.jwt.secret, {
+      subject: user_id,
+      expiresIn: authConfig.jwt.expires_in,
+    });
 
     const new_refresh_token = this.jwtProvider.generateToken(
       authConfig.refreshJwt.secret,
@@ -64,8 +74,11 @@ class CreateRefreshTokenUseCase implements IBaseUseCase {
       expires_date: refresh_token_expires_date,
     });
 
-    return new_refresh_token;
+    return {
+      token,
+      refresh_token: new_refresh_token,
+    };
   }
 }
 
-export { CreateRefreshTokenUseCase };
+export { CreateTokenByRefreshTokenUseCase };
