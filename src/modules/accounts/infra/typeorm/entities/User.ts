@@ -2,7 +2,9 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 import { Expose } from 'class-transformer';
 import { v4 as uuidV4 } from 'uuid';
 
+import { env } from '@shared/env';
 import { USERS_TABLE_NAME } from '@shared/infra/typeorm/utils';
+
 import { uploadConfig } from '@config/upload';
 
 @Entity(USERS_TABLE_NAME)
@@ -38,9 +40,9 @@ class User {
 
     switch (uploadConfig.driver) {
       case 'disk':
-        return `${process.env.APP_API_URL}/files/avatar/${this.avatar}`;
+        return `${env.APP_API_URL}/files/avatar/${this.avatar}`;
       case 's3':
-        return `${process.env.AWS_BUCKET_URL}/avatar/${this.avatar}`;
+        return `${env.AWS_BUCKET_URL}/avatar/${this.avatar}`;
       default:
         return null;
     }

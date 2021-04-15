@@ -3,6 +3,8 @@ import handlebars from 'handlebars';
 import aws from 'aws-sdk';
 import fs from 'fs';
 
+import { env } from '@shared/env';
+
 import { ISendMailProviderDTO } from '../dtos';
 import { IMailProvider } from '../model/IMailProvider';
 
@@ -18,7 +20,7 @@ class SESMailProvider implements IMailProvider {
       this.client = nodemailer.createTransport({
         SES: new aws.SES({
           apiVersion: '2010-12-01',
-          region: process.env.AWS_SES_REGION,
+          region: env.AWS_SES_REGION,
         }),
       });
     } catch (err) {

@@ -2,6 +2,8 @@ import crypto from 'crypto';
 import multer from 'multer';
 import path from 'path';
 
+import { env } from '@shared/env';
+
 interface IUploadConfig {
   driver: 'disk' | 's3';
 
@@ -12,8 +14,8 @@ interface IUploadConfig {
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
-const uploadConfig: IUploadConfig = {
-  driver: process.env.STORAGE_DRIVER || 'disk',
+const uploadConfig = {
+  driver: env.STORAGE_DRIVER || 'disk',
 
   tmpFolder,
 

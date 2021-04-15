@@ -1,9 +1,11 @@
+import { env } from '@shared/env';
+
 interface IMailConfig {
   driver: 'ethereal' | 'ses';
 }
 
-const mailConfig: IMailConfig = {
-  driver: process.env.MAIL_DRIVER || 'ethereal',
+const mailConfig = {
+  driver: env.MAIL_DRIVER,
 } as IMailConfig;
 
 export { mailConfig };
