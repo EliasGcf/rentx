@@ -3,11 +3,13 @@ import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerFile from 'swaggerFile';
 
-import { createDbConnection } from '@shared/infra/typeorm';
-import { registerDependencies } from '@shared/container';
+import { uploadConfig } from '@config/upload';
 
-import { generalErrorHandler } from '../middlewares/generalErrorHandler';
+import { registerDependencies } from '@shared/container';
+import { createDbConnection } from '@shared/infra/typeorm';
+
 import { router } from '../routes/index.routes';
+import { generalErrorHandler } from '../middlewares/generalErrorHandler';
 
 class Server {
   public app: Express;
@@ -28,6 +30,7 @@ class Server {
   private middlewares() {
     this.app.use(express.json());
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+    this.app.use('/files', express.static(uploadConfig.tmpFolder));
   }
 
   private errorHandlers() {

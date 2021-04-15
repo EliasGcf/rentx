@@ -1,10 +1,13 @@
 import { container } from 'tsyringe';
 
+import { mailConfig } from '@config/mail';
+import { uploadConfig } from '@config/upload';
+
 import { IDateProvider } from './DateProvider/model/IDateProvider';
 import { DayjsDateProvider } from './DateProvider/implementations/DayjsDateProvider';
 
+import { mailProviders } from './MailProvider';
 import { IMailProvider } from './MailProvider/model/IMailProvider';
-import { EtherealMailProvider } from './MailProvider/implementations/EtherealMailProvider';
 
 import { IHashProvider } from './HashProvider/model/IHashProvider';
 import { BCryptHashProvider } from './HashProvider/implementations/BCryptHashProvider';
@@ -12,11 +15,15 @@ import { BCryptHashProvider } from './HashProvider/implementations/BCryptHashPro
 import { IJWTProvider } from './JWTProvider/model/IJWTProvider';
 import { JsonWebTokenProvider } from './JWTProvider/implementations/JsonWebTokenProvider';
 
+import { storageProviders } from './StorageProvider';
+import { IStorageProvider } from './StorageProvider/model/IStorageProvider';
+
 const registeredProviders = {
   dateProvider: 'DateProvider',
   mailProvider: 'MailProvider',
   hashProvider: 'HashProvider',
   JWTProvider: 'JWTProvider',
+  storageProvider: 'StorageProvider',
 } as const;
 
 function registerProviders() {
@@ -27,7 +34,7 @@ function registerProviders() {
 
   container.registerInstance<IMailProvider>(
     registeredProviders.mailProvider,
-    new EtherealMailProvider(),
+    mailProviders[mailConfig.driver],
   );
 
   container.registerSingleton<IHashProvider>(
@@ -38,6 +45,11 @@ function registerProviders() {
   container.registerSingleton<IJWTProvider>(
     registeredProviders.JWTProvider,
     JsonWebTokenProvider,
+  );
+
+  container.registerSingleton<IStorageProvider>(
+    registeredProviders.storageProvider,
+    storageProviders[uploadConfig.driver],
   );
 }
 
@@ -52,5 +64,8 @@ export * from './HashProvider/model/IHashProvider';
 
 export * from './JWTProvider/implementations/JsonWebTokenProvider';
 export * from './JWTProvider/model/IJWTProvider';
+
+export * from './StorageProvider/implementations/LocalStorageProvider';
+export * from './StorageProvider/model/IStorageProvider';
 
 export { registeredProviders, registerProviders };

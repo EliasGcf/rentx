@@ -5,7 +5,7 @@ import { compilerOptions } from './tsconfig.json';
 
 export default {
   bail: 0,
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: ['<rootDir>/src/modules/**/useCases/**/*.ts'],
   coverageReporters: ['text-summary', 'lcov'],
   clearMocks: true,
