@@ -72,6 +72,9 @@ const env = enValid.cleanEnv(process.env, {
   AWS_BUCKET_URL: enValid.str({
     default: process.env.STORAGE_DRIVER === 'disk' ? '' : undefined,
   }),
+  SENTRY_DSN_URL: enValid.str({
+    devDefault: '',
+  }),
 });
 
 export { env };

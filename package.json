@@ -9,7 +9,6 @@
     "test:verbose": "NODE_ENV=test jest --runInBand --verbose",
     "test:watchAll": "NODE_ENV=test jest --runInBand --watchAll",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:create": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create -n",
     "migration:run": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert",
@@ -58,6 +57,8 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@sentry/node": "^6.3.5",
+    "@sentry/tracing": "^6.3.5",
     "aws-sdk": "^2.886.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
