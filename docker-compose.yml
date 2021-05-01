@@ -5,19 +5,20 @@ networks:
     driver: bridge
 
 services:
-  rentx-api:
-    build: .
-    container_name: rentx-api
-    environment:
-      - POSTGRES_HOST=rentx-postgres
-    depends_on:
-      - rentx-postgres
-    ports:
-      - 3333:3333
-    volumes:
-      - .:/usr/app
-    networks:
-      - rentx-network
+  # rentx-api:
+  #   build: .
+  #   container_name: rentx-api
+  #   environment:
+  #     - POSTGRES_HOST=rentx-postgres
+  #   depends_on:
+  #     - rentx-postgres
+  #     - rentx-redis
+  #   ports:
+  #     - 3333:3333
+  #   volumes:
+  #     - .:/usr/app
+  #   networks:
+  #     - rentx-network
 
   rentx-postgres:
     image: postgres
@@ -25,11 +26,18 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=rentx
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_DB=${POSTGRES_DB_NANE}
     volumes:
       - pgdata:/data/postgres
+    networks:
+      - rentx-network
+
+  rentx-redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
     networks:
       - rentx-network
 

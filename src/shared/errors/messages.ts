@@ -17,6 +17,7 @@ const errorsMessages = {
   user_rent_in_progress: 'There is a rent in progress with this user.',
   car_rent_in_progress: 'There is a rent in progress with this car.',
   invalid_return_rent_date: `Expected return date is less than ${MIN_RENT_HOURS}h.`,
+  to_many_requests: 'Too many requests. Come down.',
 };
 
 export { errorsMessages };

@@ -14,6 +14,38 @@ const env = enValid.cleanEnv(process.env, {
     example: 'http://localhost:3333/password/reset?token=',
     devDefault: 'http://localhost:3333/password/reset?token=',
   }),
+  POSTGRES_HOST: enValid.str({
+    devDefault: 'localhost',
+    example: 'localhost',
+  }),
+  POSTGRES_PORT: enValid.port({
+    devDefault: 5432,
+    example: '5432',
+  }),
+  POSTGRES_USER: enValid.str({
+    devDefault: 'docker',
+    example: 'docker',
+  }),
+  POSTGRES_PASS: enValid.str({
+    devDefault: 'docker',
+    example: 'docker',
+  }),
+  POSTGRES_DB_NANE: enValid.str({
+    devDefault: 'rentx',
+    example: 'rentx',
+  }),
+  REDIS_HOST: enValid.str({
+    devDefault: 'localhost',
+    example: 'localhost',
+  }),
+  REDIS_PORT: enValid.port({
+    devDefault: 6379,
+    example: '6379',
+  }),
+  REDIS_PASS: enValid.str({
+    devDefault: '',
+    example: 'redis_password',
+  }),
   MAIL_DRIVER: enValid.str({
     choices: ['ethereal', 'ses'],
     devDefault: 'ethereal',
