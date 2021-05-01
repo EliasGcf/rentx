@@ -23,7 +23,7 @@ describe('Create Category Controller', () => {
       password: SEED_ADMIN_USER_PASS,
     });
 
-    adminToken = body.refresh_token;
+    adminToken = body.token;
   });
 
   afterAll(async () => {

@@ -6,27 +6,31 @@ import { env } from '@shared/env';
 import { AppError } from '@shared/errors';
 import { redisConfig } from '@config/redis';
 
-const redisClient = redis.createClient({
-  host: redisConfig.host,
-  port: redisConfig.port,
+const redisClient = env.isTest
+  ? undefined
+  : redis.createClient({
+      host: redisConfig.host,
+      port: redisConfig.port,
+    });
+
+redisClient?.on('connect', () => {
+  if (env.isDev) console.log('Redis connected');
 });
 
-redisClient.on('connect', () => {
-  console.log('Redis connected');
-});
-
-const rateLimiterClient = new RateLimiterRedis({
-  storeClient: redisClient,
-  keyPrefix: 'rateLimiter',
-  points: 10,
-  duration: 5,
-});
+const rateLimiterClient = env.isTest
+  ? undefined
+  : new RateLimiterRedis({
+      storeClient: redisClient,
+      keyPrefix: 'rateLimiter',
+      points: 10,
+      duration: 5,
+    });
 
 async function rateLimiter(req: Request, res: Response, next: NextFunction) {
   try {
     if (env.isTest) return next();
 
-    await rateLimiterClient.consume(req.ip);
+    await rateLimiterClient?.consume(req.ip);
 
     return next();
   } catch {
