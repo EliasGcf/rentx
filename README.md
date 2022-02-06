@@ -63,7 +63,10 @@ $ cp .env.example .env
 $ docker-compose up -d
 
 # Once the services are running, run the migrations
-$ yarn typeorm migration:run
+$ yarn migration:run
+
+# Run the seeds
+$ yarn seed:run
 
 # To finish, run the api service
 $ yarn dev:server
